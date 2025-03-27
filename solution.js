@@ -1,5 +1,9 @@
 const closestPairDiff = (arr, target) => {
-  // escribe aqui tu código!
+  return arr.flatMap((a, i) =>
+    arr.slice(i + 1).map(b => Math.abs(a + b - target))
+  ).reduce((minDiff, currDiff) =>
+    Math.min(minDiff, currDiff)
+  );
 };
 
 // tests
