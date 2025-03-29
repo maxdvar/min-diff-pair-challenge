@@ -1,5 +1,26 @@
 const closestPairDiff = (arr, target) => {
   // escribe aqui tu código!
+  const sortedArr = arr.toSorted();
+  function search(arr, target, bounds) {
+    if (bounds.left >= bounds.right) {
+      return bounds.min_diff;
+    }
+    const diff =  (arr[bounds.left] + arr[bounds.right]) - target;
+    bounds.min_diff = ((isNaN(bounds.min_diff))? Math.abs(diff):Math.min(bounds.min_diff, Math.abs(diff)));
+    if (bounds.min_diff === 0) {
+      return bounds.min_diff;
+    } else if (diff > 0) {
+      bounds.right -= 1;
+    } else {
+      bounds.left += 1;
+    }
+    return search(arr, target, bounds);
+  }
+  return search(sortedArr, target, {
+                                       left: 0,
+                                       right: arr.length - 1,
+                                       min_diff: NaN
+                                    });
 };
 
 // tests
